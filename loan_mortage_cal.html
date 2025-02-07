@@ -1,0 +1,73 @@
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+</head>
+<link rel="stylesheet" href="Age_cal.css">
+
+<body>
+
+    <div id="main3" style="display:flex;justify-content:center ; ">
+        <h1 style="text-align:center; ">LOAN / EMI calculator</h1>
+        <div id="head" style="height: 40px ;align-items:center ;">
+
+            <input id="amo" type="number" min="1000" max="200000" autofocus placeholder="Amount"
+                style="text-align: center ;">
+            <input id="yr" type="number" min="1" max="40" autofocus placeholder="years" required
+                style="text-align: center ;">
+            <input id="si" type="number" min="1" max="100" autofocus placeholder="interest %" required
+                style="text-align: center ;">
+
+        </div>
+
+        <div id="dis" style="height: 200px;gap:0px;margin-left:20px;display:flex;justify-content:center;">
+            <h3 id="1" >MONTHLY EMI</h3>
+            <h3 id="2" >Principle Amount</h3>
+            <h3 id="3" >TOTAL Interest</h3>
+            <h3 id="4" >Total Amount</h3>
+        </div>
+        <div style="display: flex;justify-content:center ;margin-bottom:60px">
+            <button id="btn" onclick="Emi_cal()">CALCULATE</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    function Emi_cal() {
+        var amount = document.getElementById("amo").value;
+        var year = document.getElementById("yr").value;
+        var interest = document.getElementById("si").value;
+        //( p*int*(1+int)**n)/ (1+int)**n)-1
+        // n= total no of months
+        //r= monthly interest
+        const months = year * 12
+        var Int_Per_mont = (interest / 1200)
+        // calculation of (1+int)**n
+        var cal = ((1 + Int_Per_mont) ** months);
+        const ans = Math.round((amount * Int_Per_mont * cal) / (cal - 1))
+        console.log(months, Int_Per_mont, cal)
+        console.log(ans)
+        for (let i = 1; i < 5; i++) {
+            if (i == 1) {
+                document.getElementById(i).innerText = "MONTHLY EMI: " + ans;
+                document.getElementById(i).style.fontSize = "18px";
+            } else if (i == 1) {
+                document.getElementById(i).innerText = "PRINCIPAL: " + amount;
+                document.getElementById(i).style.fontSize = "18px";
+            } else if (i == 3) {
+                document.getElementById(i).innerText = "TOTAL INTEREST: " + ((ans * months) - amount);
+                document.getElementById(i).style.fontSize = "18px";
+            } else {
+                document.getElementById(i).innerText = "TOTAL AMOUNT PAY: " + (parseInt(amount) + parseInt((ans * months) - amount));
+                document.getElementById(i).style.fontSize = "18px";
+            }
+
+
+        }
+    }
+
+
+</script>
+
+</html>
